@@ -1,5 +1,5 @@
 # BRIW_23
-Repositorio 'Búsqueda y Recuperación de Información en la Web'
+Repositorio para el proyecto de la materia 'Búsqueda y Recuperación de Información en la Web' de la Licenciatura en Ingeniería de Software de la UADY
 
 ## Integrantes ✨
 
