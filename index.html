@@ -1,14 +1,45 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador Web</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
     <header>
+        <div>
 
+        </div>
     </header>
-    <body>
 
-        <form action="Buscador/buscar.php">
-            <p>Buscar:</p>
-            <input type="text">
-            <input type="submit" value="Buscar">
+    <main>
+        <h1>BUSCADOR WEB</h1>
+        <!-- El formulario ahora envía datos a buscar.php mediante POST -->
+        <form id="buscador" action="buscar.php" method="get">
+            <input type="text" name="query" id="campo-busqueda" placeholder="Buscar..." required>
+            <button type="submit" id="btnBuscar">Buscar</button>
+            <br>
+            <br>
+            <!-- Menú desplegable para categorías -->
+            <select name="categoria_busqueda" id="categoria-busqueda">
+                <option value="">Seleccione una categoría</option>
+                <option value="categoria1">Categoría 1</option>
+                <option value="categoria2">Categoría 2</option>
+                <!-- Más opciones de categorías -->
+            </select>
         </form>
+        <!-- Aquí se mostrarán los resultados de la búsqueda -->
+        <div id="resultados"></div>
+    </main>
 
-    </body>
+    <footer>
+        <div id="datos-contacto">
+            <p>Búsqueda y Recuperación de Información en la Web</p>
+        </div>
+    </footer>
+</body>
+
 </html>

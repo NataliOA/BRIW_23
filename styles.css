@@ -1,0 +1,203 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #1a1d1a;
+    background-color: #FBF9FF;
+    padding-top: 60px;
+    /* Ajusta según la altura del header */
+}
+
+header {
+    background-color: #FFBA08;
+    padding: 20px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+main {
+    padding: 20px;
+    margin-top: 20px;
+    padding-bottom: 50px;
+    /* Ajusta según la altura del header */
+    background-color: #FBF9FF;
+    color: #1a1d1a;
+    min-height: calc(100vh - 140px);
+    /* Ajusta según la altura del header y footer */
+}
+
+h1 {
+color: #1a1d1a;
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#buscador {
+    text-align: center;
+    padding: 10px;
+}
+
+#campo-busqueda,
+#btnBuscar,
+#categoria-busqueda {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    /* Rounded corners for input and button */
+}   
+
+#campo-busqueda {
+    width: 500px;
+}
+#btnBuscar {
+    background-color: #3590f3;
+    /* Bootstrap primary color for the button */
+    color: #fbf9ff;
+    border: none;
+}
+
+#resultados {
+    list-style: none;
+    /* Remove default list styling */
+    padding-left: 0;
+    /* Align with the rest of the content */
+}
+
+#resultados li {
+    background-color: #fff;
+    /* White background for each result */
+    padding: 15px;
+    margin-bottom: 10px;
+    /* Space between results */
+    border-radius: 4px;
+    /* Rounded corners for the result items */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow for depth */
+}
+
+#resultados li a {
+    color: #007bff;
+    /* Bootstrap primary color for links */
+    text-decoration: none;
+    /* No underline for links */
+}
+
+#resultados li a:hover {
+    text-decoration: underline;
+    /* Underline on hover for better user experience */
+}
+
+footer {
+    background-color: #FFBA08;
+    padding: 20px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    z-index: 10;
+}
+
+
+#regresar-btn {
+    position: absolute;
+    right: 10px;
+    /* Alinea el enlace a la derecha */
+    top: 50%;
+    transform: translateY(-50%);
+    /* Centra el enlace verticalmente */
+    color: #1a1d1a;
+    /* O el color que prefieras */
+    text-decoration: none;
+    /* Quita el subrayado del enlace */
+    font-size: 16px;
+    /* Tamaño de la fuente */
+    z-index: 5;
+    /* Asegura que esté por encima de otros elementos */
+}
+
+.regresar-btn {
+    display: flex;
+    /* Alinea imagen y texto horizontalmente */
+    align-items: center;
+    /* Centra verticalmente el texto con la imagen */
+    text-decoration: none;
+    /* Elimina el subrayado del enlace */
+    color: inherit;
+    /* Hereda el color de texto del elemento padre */
+}
+
+.regresar-btn img {
+    margin-right: 10px;
+    /* Espacio entre la imagen y el texto */
+}
+
+
+.resultados-container {
+    margin-top: 20px;
+    /* Space from the title */
+}
+
+.resultado {
+    background-color: #ffffff;
+    /* White background for each result */
+    border-radius: 5px;
+    /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Shadow for depth */
+    padding: 20px;
+    /* Padding inside each result */
+    margin-bottom: 20px;
+    /* Space between each result */
+}
+
+.resultado h2 {
+    margin-top: 0;
+    color: #007bff;
+    /* Title color */
+}
+
+.resultado .categoria,
+.resultado .fecha,
+.resultado .relevancia {
+    font-style: italic;
+    color: #666666;
+}
+
+.resultado .contenido {
+    margin: 10px 0;
+}
+
+.resultado .snippet {
+    font-size: 18px;
+}
+
+.resultado .url {
+    display: block;
+    /* Make the URL a block to move it to a new line */
+    margin-top: 10px;
+    color: #007bff;
+    /* Link color */
+    text-decoration: none;
+    /* No underline */
+}
+
+.resultado .url:hover {
+    text-decoration: underline;
+    /* Underline on hover for better user experience */
+}
