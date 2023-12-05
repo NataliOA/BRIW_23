@@ -70,17 +70,17 @@ function fetchUrl($client, $url) {
 }
 
 // URL inicial
-$startUrl = 'https://www.muyinteresante.es/';
-
+//$startUrl = 'https://www.muyinteresante.es/';
+startCrawler('https://www.bbc.com/mundo');
 // Profundidad 1
-function startCrawler($url){
+function startCrawler($startUrl){
     global $client;
     global $visitedUrls;
     global $keywordsToCategory;
 
     $client = new Client();    
 
-    $html = fetchUrl($client, $url);
+    $html = fetchUrl($client, $startUrl);
     if ($html) {
         $depth1Links = getLinks($html, $startUrl, $visitedUrls, 5);
         foreach ($depth1Links as $linkDepth1) {
@@ -95,11 +95,12 @@ function startCrawler($url){
                         $details = getPageDetails($detailsHtml, $linkDepth2, $keywordsToCategory);
                         // Solo imprimir si todos los detalles requeridos están presentes.
                         if ($details) {
-                            echo "Enlace de nivel 2 encontrado: $linkDepth2\n";
+                            /*echo "Enlace de nivel 2 encontrado: $linkDepth2\n";
                             echo "Título: " . $details['title'] . "\n";
                             echo "Descripción: " . $details['description'] . "\n";
                             echo "Categoría: " . $details['category'] . "\n";
-                            echo "Snippet: " . $details['snippet'] . "\n";
+                            echo "Snippet: " . $details['snippet'] . "\n";*/
+                            postToSolr($details);
                         } /*else {
                             echo "La página no tiene todos los detalles requeridos y no será impresa.\n";
                         }*/
@@ -190,6 +191,33 @@ function assignCategory($title, $description, $keywordsToCategory) {
     $topCategory = key($categoryScores); // Obtiene la categoría con la puntuación más alta
 
     return $topCategory ?: 'general'; // 'general' como categoría por defecto
+}
+
+function postToSolr($data) {
+    $client = new GuzzleHttp\Client();
+    $solrUrl = 'http://localhost:8983/solr/CoreBRIW/update?commit=true'; // Asegúrate de reemplazar con tu URL de Solr y nombre de core
+
+    // Asegúrate de que los datos se envíen como un documento JSON y no como una cadena JSON serializada.
+    $jsonDocument = [
+        'id' => $data['id'] ?? uniqid(), // Genera un ID único si no se proporciona uno
+        'title' => $data['title'],
+        'description' => $data['description'],
+        'category' => $data['category'],
+        'snippet' => $data['snippet'],
+        'url' => $data['url']
+        // No es necesario enviar "_version_", Solr lo manejará automáticamente
+    ];
+
+    try {
+        $response = $client->post($solrUrl, [
+            'headers' => ['Content-Type' => 'application/json'],
+            'body' => json_encode([$jsonDocument]) // Envía el documento como parte de un arreglo
+        ]);
+
+        echo "Datos indexados en Solr. Respuesta: " . $response->getBody() . "\n";
+    } catch (RequestException $e) {
+        echo "Error al indexar en Solr: " . $e->getMessage() . "\n";
+    }
 }
 
 ?>
