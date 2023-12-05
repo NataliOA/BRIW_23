@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/vendor/autoload.php';
+require '../vendor/autoload.php';
 //$resp = var_dump(class_exists('Symfony\Component\DomCrawler\Crawler'));
 //echo $resp;
 
@@ -73,29 +73,32 @@ function fetchUrl($client, $url) {
 $startUrl = 'https://www.muyinteresante.es/';
 
 // Profundidad 1
-$html = fetchUrl($client, $startUrl);
-if ($html) {
-    $depth1Links = getLinks($html, $startUrl, $visitedUrls, 5);
-    foreach ($depth1Links as $linkDepth1) {
-        // Profundidad 2
-        $depth2Html = fetchUrl($client, $linkDepth1);
-        if ($depth2Html) {
-            $depth2Links = getLinks($depth2Html, $linkDepth1, $visitedUrls, 15);
-            foreach ($depth2Links as $linkDepth2) {
-                echo "Enlace de nivel 2 encontrado: $linkDepth2\n";
-                $detailsHtml = fetchUrl($client, $linkDepth2);
-                if ($detailsHtml) {
-                    $details = getPageDetails($detailsHtml, $linkDepth2, $keywordsToCategory);
-                    // Solo imprimir si todos los detalles requeridos están presentes.
-                    if ($details) {
-                        echo "Enlace de nivel 2 encontrado: $linkDepth2\n";
-                        echo "Título: " . $details['title'] . "\n";
-                        echo "Descripción: " . $details['description'] . "\n";
-                        echo "Categoría: " . $details['category'] . "\n";
-                        echo "Snippet: " . $details['snippet'] . "\n";
-                    } /*else {
-                        echo "La página no tiene todos los detalles requeridos y no será impresa.\n";
-                    }*/
+function startCrawler($url){
+    $client = new Client();
+    $html = fetchUrl($client, $url);
+    if ($html) {
+        $depth1Links = getLinks($html, $startUrl, $visitedUrls, 5);
+        foreach ($depth1Links as $linkDepth1) {
+            // Profundidad 2
+            $depth2Html = fetchUrl($client, $linkDepth1);
+            if ($depth2Html) {
+                $depth2Links = getLinks($depth2Html, $linkDepth1, $visitedUrls, 15);
+                foreach ($depth2Links as $linkDepth2) {
+                    echo "Enlace de nivel 2 encontrado: $linkDepth2\n";
+                    $detailsHtml = fetchUrl($client, $linkDepth2);
+                    if ($detailsHtml) {
+                        $details = getPageDetails($detailsHtml, $linkDepth2, $keywordsToCategory);
+                        // Solo imprimir si todos los detalles requeridos están presentes.
+                        if ($details) {
+                            echo "Enlace de nivel 2 encontrado: $linkDepth2\n";
+                            echo "Título: " . $details['title'] . "\n";
+                            echo "Descripción: " . $details['description'] . "\n";
+                            echo "Categoría: " . $details['category'] . "\n";
+                            echo "Snippet: " . $details['snippet'] . "\n";
+                        } /*else {
+                            echo "La página no tiene todos los detalles requeridos y no será impresa.\n";
+                        }*/
+                    }
                 }
             }
         }
