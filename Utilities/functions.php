@@ -7,8 +7,9 @@
 
         for($i=1; $i<count($info); $i=$i+2){
             if($info[$i]=='N'){
-                fetchUrl($info[$i+1]);
+                startCrawler($info[$i-1]);
             }
         }
     }
+
 ?>

@@ -74,7 +74,12 @@ $startUrl = 'https://www.muyinteresante.es/';
 
 // Profundidad 1
 function startCrawler($url){
-    $client = new Client();
+    global $client;
+    global $visitedUrls;
+    global $keywordsToCategory;
+
+    $client = new Client();    
+
     $html = fetchUrl($client, $url);
     if ($html) {
         $depth1Links = getLinks($html, $startUrl, $visitedUrls, 5);

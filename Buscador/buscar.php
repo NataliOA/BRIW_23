@@ -30,13 +30,15 @@ foreach($sinonimos[$p] as $ar){
 $solrServerUrl = 'http://localhost:8983/solr/Proyecto_BRIW1/select';
 
 $sins = '';
-foreach ($sinonimos as $sinonimo) {
-    $sins .= ' OR ' . $sinonimo;
+if(!empty($sinonimos)){
+    foreach ($sinonimos as $sinonimo) {
+        $sins .= ' OR ' . $sinonimo;
+    }
 }
 
-$query.=$sins;
+$q =$query.$sins;
 // Construye la consulta de búsqueda
-$solrQuery = $solrServerUrl . '?q=' . urlencode($query) . '&fl=*,score';
+$solrQuery = $solrServerUrl . '?q=' . urlencode($q) . '&fl=*,score';
 if (!empty($categoria)) {
     $solrQuery .= '&fq=category:"' . urlencode($categoria) . '"';
 }
