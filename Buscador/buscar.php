@@ -35,7 +35,10 @@ if(!empty($busqueda)){
 
 $q =$query.$sins;
 // Construye la consulta de búsqueda
-$solrQuery = $solrServerUrl . '?facet.field=category&facet=true&q=' . urlencode($q) . '&fl=*,score';
+$solrQuery = $solrServerUrl.'?q=' . urlencode($q) . '&fl=*,score';
+if (!empty($categoria)) {
+    $solrQuery .= '&fq=category:"' . urlencode($categoria) . '"';
+}
 
 // Realiza la solicitud a Solr
 $ch = curl_init($solrQuery);
@@ -44,10 +47,22 @@ curl_setopt($ch, CURLOPT_HEADER, false);
 $response = curl_exec($ch);
 curl_close($ch);
 
+$solrQuery = $solrServerUrl.'?facet.field=category&facet=true&q=' . urlencode($q) . '&fl=*,score';
+
+// Realiza la solicitud a Solr
+$ch = curl_init($solrQuery);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HEADER, false);
+$facet = curl_exec($ch);
+curl_close($ch);
+
 // Procesa la respuesta
 if ($response) {
     $data = json_decode($response, true);
     $resultados = $data['response']['docs'];
+    $facets = json_decode($facet,true);
+    $facetados = $facets['facet_counts']['facet_fields']['category'];
+    
 } else {
     // Manejar errores, por ejemplo, Solr no está disponible
     $resultados = [];
@@ -76,7 +91,14 @@ if ($response) {
         <h1>Resultados de búsqueda para "
             <?php echo htmlspecialchars($query); ?>"
         </h1>
-        <?php if (!empty($resultados)): ?>
+        <?php if (!empty($resultados)):?>
+            <div id="facetacion">
+                <?php for($i=0;$i<count($facetados);$i=$i+2): ?>
+                    <a href='buscar.php?query=<?=$query?>&categoria_busqueda=<?=$facetados[$i]?>'>
+                        <?php echo htmlspecialchars($facetados[$i])?>(<?php echo htmlspecialchars($facetados[$i+1])?>)
+                    </a>&nbsp;
+                <?php endfor;?>
+            </div>
             <div class="resultados-container"> 
                 <?php foreach ($resultados as $doc): ?>
                     <div class="resultado">

@@ -48,8 +48,6 @@ color: #1a1d1a;
     padding: 10px;
 }
 
-
-
 #campo-busqueda,
 #btnBuscar,
 #categoria-busqueda {
@@ -73,6 +71,10 @@ color: #1a1d1a;
     /* Bootstrap primary color for the button */
     color: #fbf9ff;
     border: none;
+}
+
+#facetacion{
+    text-align: center;
 }
 
 #resultados {
