@@ -48,6 +48,8 @@ color: #1a1d1a;
     padding: 10px;
 }
 
+
+
 #campo-busqueda,
 #btnBuscar,
 #categoria-busqueda {
@@ -57,6 +59,11 @@ color: #1a1d1a;
     border-radius: 4px;
     /* Rounded corners for input and button */
 }   
+
+#lista-sugerencias {
+    list-style-type: none; /* Elimina los marcadores */
+    padding: 10; /* Elimina el relleno izquierdo, si es necesario */
+}
 
 #campo-busqueda {
     width: 500px;
@@ -201,3 +208,5 @@ footer {
     text-decoration: underline;
     /* Underline on hover for better user experience */
 }
+
+

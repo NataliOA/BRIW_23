@@ -8,19 +8,29 @@
     <link rel="stylesheet" href="styles.css">
     <script>
         function obtenerSugerencias(input) {
-        if (input.length === 0) {
-            document.getElementById("lista-sugerencias").innerHTML = "";
-            return;
-        } else {
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("lista-sugerencias").innerHTML = this.responseText;
-                }
-            };
-            xmlhttp.open("GET", "Utilities/sugerencias.php?q=" + input, true);
-            xmlhttp.send();
+            console.log("obtenersug");
+            if (input.length === 0) {
+                document.getElementById("lista-sugerencias").innerHTML = "";
+                document.getElementById("lista-sugerencias").style.display = "none";
+                return;
+            } else {
+                console.log("http request");
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("lista-sugerencias").innerHTML = this.responseText;
+                        document.getElementById("lista-sugerencias").style.display = "block";
+                    }
+                };
+                xmlhttp.open("GET", "Utilities/sugerencias.php?q=" + input, true);
+                xmlhttp.send();
+                console.log("fin");
+            }
         }
+
+        function establecerSugerencia(sugerencia) {
+            document.getElementById("campo-busqueda").value = sugerencia;
+            document.getElementById("lista-sugerencias").style.display = "none";
         }
     </script>
 </head>
@@ -39,6 +49,7 @@
             <input type="text" name="query" id="campo-busqueda" placeholder="Buscar..." oninput="obtenerSugerencias(this.value)" required>
             <button type="submit" id="btnBuscar">Buscar</button>
             <br>
+            <ul id="lista-sugerencias" onclick="establecerSugerencia(event.target.innerText)"></ul>
             <br>
             <!-- Menú desplegable para categorías -->
             <select name="categoria_busqueda" id="categoria-busqueda">
@@ -48,7 +59,7 @@
                 <!-- Más opciones de categorías -->
             </select>
         </form>
-        <ul id="lista-sugerencias"></ul>
+        
     </main>
 
     <footer>

@@ -3,9 +3,6 @@
 $query = $_GET['query'] ?? ''; // Asegúrate de que el parámetro 'query' está presente
 $categoria = $_GET['categoria_busqueda'] ?? ''; // Asegúrate de que el parámetro 'categoria' está presente
 
-echo "Consulta: " . var_export($query, true) . "<br>";
-echo "Categoría: " . var_export($categoria, true) . "<br>";
-
 include '../Utilities/functions.php';
 verificarCrawler();
 
@@ -20,8 +17,8 @@ foreach ($palabras as $p) {
 
 $count=0;
 $expansion = file_get_contents("https://api.datamuse.com/words?v=es&ml=$querySin&max=3");
-$sinonimos[$p] = json_decode($expansion, true);
-foreach($sinonimos[$p] as $ar){
+$sinonimos = json_decode($expansion, true);
+foreach($sinonimos as $ar){
     $busqueda[$count]=$ar['word'];
     $count++;
 }
@@ -30,8 +27,8 @@ foreach($sinonimos[$p] as $ar){
 $solrServerUrl = 'http://localhost:8983/solr/Proyecto_BRIW1/select';
 
 $sins = '';
-if(!empty($sinonimos)){
-    foreach ($sinonimos as $sinonimo) {
+if(!empty($busqueda)){
+    foreach ($busqueda as $sinonimo) {
         $sins .= ' OR ' . $sinonimo;
     }
 }
@@ -39,9 +36,6 @@ if(!empty($sinonimos)){
 $q =$query.$sins;
 // Construye la consulta de búsqueda
 $solrQuery = $solrServerUrl . '?q=' . urlencode($q) . '&fl=*,score';
-if (!empty($categoria)) {
-    $solrQuery .= '&fq=category:"' . urlencode($categoria) . '"';
-}
 
 // Realiza la solicitud a Solr
 $ch = curl_init($solrQuery);
@@ -68,13 +62,13 @@ if ($response) {
 <head>
     <meta charset="UTF-8">
     <title>Resultados de búsqueda</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles.css">
 </head>
 
 <body>
     <header>
-        <a href="index.html" class="regresar-btn">
-            <img src="images/goback.png" alt="Inicio" width="30" height="30">
+        <a href="../index.html" class="regresar-btn">
+            <img src="../images/goback.png" alt="Inicio" width="30" height="30">
             <span>Inicio</span>
         </a>
     </header>

@@ -71,7 +71,7 @@ function fetchUrl($client, $url) {
 
 // URL inicial
 //$startUrl = 'https://www.muyinteresante.es/';
-startCrawler('https://www.bbc.com/mundo');
+//startCrawler('https://www.bbc.com/mundo');
 // Profundidad 1
 function startCrawler($startUrl){
     global $client;
@@ -195,7 +195,7 @@ function assignCategory($title, $description, $keywordsToCategory) {
 
 function postToSolr($data) {
     $client = new GuzzleHttp\Client();
-    $solrUrl = 'http://localhost:8983/solr/CoreBRIW/update?commit=true'; // Asegúrate de reemplazar con tu URL de Solr y nombre de core
+    $solrUrl = 'http://localhost:8983/solr/Proyecto_BRIW1/update?commit=true'; // Asegúrate de reemplazar con tu URL de Solr y nombre de core
 
     // Asegúrate de que los datos se envíen como un documento JSON y no como una cadena JSON serializada.
     $jsonDocument = [

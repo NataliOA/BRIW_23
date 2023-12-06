@@ -1,29 +1,27 @@
 <?php
     $q = $_GET['q'] ?? '';
-    $api_key = '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';
 
-    function getSuggestions($input) {
-        global $api_key;
-        $url = file_get_contents('APIKey.php');
-        $data = array(
-            'prompt' => $input, 
-            'max_tokens' => 10
-        );
+    $palabras = explode(" ", $q);
+    $res = [];
+    $sugerencias= [];
+    $sugs = '';
 
-        $options = array(
-            'http' => array(
-                'header'  => "Content-type: application/json\r\n" .
-                            "Authorization: Bearer $api_key\r\n",
-                'method'  => 'POST',
-                'content' => json_encode($data)
-            )
-        );
+    foreach($palabras as $p) {
+        $sugs .= $p.'+';
+    }
+    $sugs = substr($sugs, 0, -1);
 
-        $context  = stream_context_create($options);
-        $result = file_get_contents($url, false, $context);
-        if ($result === FALSE) { /* Manejar error */ }
-
-        $sugerencia =  json_decode($result, true);
+    $count=0;
+    $result = file_get_contents("https://api.datamuse.com/sug?v=es&s=$sugs");
+    $res = json_decode($result, true);
+    foreach($res as $ar){
+        $sugerencias[$count]=$ar['word'];
+        $count++;
     }
 
+    if (!empty($res)) {
+        foreach ($sugerencias as $sug) {
+            echo "<li>" . htmlspecialchars($sug) . "</li>";
+        }
+    }
 ?>
