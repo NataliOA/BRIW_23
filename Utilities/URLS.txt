@@ -1,4 +1,4 @@
-https://es.wikipedia.org/wiki/Wikipedia:Portada N
-https://www.lavanguardia.com/ciencia N
-https://www.bbc.com/mundo N
-https://www.muyinteresante.es/ N
+https://es.wikipedia.org/wiki/Wikipedia:Portada S
+https://www.lavanguardia.com/ciencia S
+https://www.bbc.com/mundo S
+https://www.muyinteresante.es/ S

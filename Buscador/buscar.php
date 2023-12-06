@@ -35,7 +35,7 @@ if(!empty($busqueda)){
 
 $q =$query.$sins;
 // Construye la consulta de búsqueda
-$solrQuery = $solrServerUrl . '?q=' . urlencode($q) . '&fl=*,score';
+$solrQuery = $solrServerUrl . '?facet.field=category&facet=true&q=' . urlencode($q) . '&fl=*,score';
 
 // Realiza la solicitud a Solr
 $ch = curl_init($solrQuery);
@@ -79,12 +79,6 @@ if ($response) {
         <?php if (!empty($resultados)): ?>
             <div class="resultados-container"> 
                 <?php foreach ($resultados as $doc): ?>
-                    <?php
-                    // Formatear fecha
-                    $fechaSolr = $doc['last_date'];
-                    $fechaDateTime = new DateTime($fechaSolr);
-                    $fechaFormateada = $fechaDateTime->format('d/m/Y');
-                    ?>
                     <div class="resultado">
                         <h2>
                             <a href="<?php echo htmlspecialchars($doc['url']); ?>" target="_blank">
@@ -94,9 +88,13 @@ if ($response) {
                         <p class="snippet">
                             <?php echo htmlspecialchars($doc['snippet']); ?>
                         </p>
-                        <p class="fecha">
-                        <p><strong>Última fecha:</strong>
-                            <?php echo $fechaFormateada; ?>
+                        <p class="descripcion">
+                        <p><strong>Descripción:</strong>
+                            <?php echo htmlspecialchars($doc['description']);?>
+                        </p>
+                        <p class="categoria">
+                        <p><strong>Categoria:</strong>
+                            <?php echo htmlspecialchars($doc['category']);?>
                         </p>
                         <p class="relevancia">
                         <p><strong>Relevancia:</strong>
