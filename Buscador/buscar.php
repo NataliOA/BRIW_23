@@ -68,7 +68,6 @@ if ($response) {
     $resultados = [];
 }
 
-
 ?>
 
 <!DOCTYPE html>
@@ -127,7 +126,10 @@ if ($response) {
             </div>
         <?php else: ?>
             <h1>No se encontraron resultados.</h1>
-        <?php endif; ?>
+        <?php 
+            sugerirCorrec($query);
+            endif; 
+        ?>
     </main>
     <footer></footer>
 </body>
