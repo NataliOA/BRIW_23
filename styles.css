@@ -44,8 +44,10 @@ color: #1a1d1a;
 }
 
 #buscador {
-    text-align: center;
-    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
 
 #campo-busqueda,
@@ -84,14 +86,32 @@ color: #1a1d1a;
 #lista-sugerencias li:hover {
     background-color: #f8f8f8;
 }
-#campo-busqueda {
+
+form{
+position: relative;
+    /* Esto es importante para alinear la lista de sugerencias con el input */
     width: 500px;
+    /* El ancho deseado para el cuadro de búsqueda */
+    margin: auto;
+}
+
+
+#campo-busqueda {
+    flex-grow: 1;
+        margin-right: 8px;
+        /* Espacio entre el campo de búsqueda y el botón */
+        border-top-left-radius: 4px;
+        /* Esquinas redondeadas solo en la parte superior izquierda */
+        border-bottom-left-radius: 4px;
 }
 #btnBuscar {
     background-color: #3590f3;
     /* Bootstrap primary color for the button */
     color: #fbf9ff;
     border: none;
+    border-top-right-radius: 4px;
+        /* Esquinas redondeadas solo en la parte superior derecha */
+        border-bottom-right-radius: 4px;
 }
 
 #facetacion{
