@@ -1,0 +1,43 @@
+# Archivos generales del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Carpetas de configuración de Visual Studio Code
+.vscode/
+
+# Archivos de configuración y carpetas específicas de Node (si los usas)
+node_modules/
+npm-debug.log
+
+# Directorios de dependencias de PHP (Composer)
+vendor/ # incluye Solarium y otras bibliotecas PHP
+composer.lock
+
+# Archivos de configuración y registro de Solr
+solr-*/example/
+solr-*/docs/
+solr-*/dist/
+solr-*/contrib/
+solr-*/server/
+solr-*/node/
+solr-*/logs/
+
+# Archivos de configuración local
+.env
+.env.local
+
+# Archivos y carpetas generados durante la ejecución
+*.log
+*.cache
+*.tmp
+
+# Carpetas de salida de build (ajusta según tu configuración)
+/dist
+/build
+
+# Ignorar archivos específicos de CSS y HTML si es necesario
+# *.css.map
+# *.html.map
+
+# Otros archivos que quieras excluir
+# Ejemplos: archivos de configuración específicos, backups, etc.
