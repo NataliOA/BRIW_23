@@ -89,7 +89,7 @@ function startCrawler($startUrl){
             if ($depth2Html) {
                 $depth2Links = getLinks($depth2Html, $linkDepth1, $visitedUrls, 15);
                 foreach ($depth2Links as $linkDepth2) {
-                    echo "Enlace de nivel 2 encontrado: $linkDepth2\n";
+                    //echo "Enlace de nivel 2 encontrado: $linkDepth2\n";
                     $detailsHtml = fetchUrl($client, $linkDepth2);
                     if ($detailsHtml) {
                         $details = getPageDetails($detailsHtml, $linkDepth2, $keywordsToCategory);
@@ -214,7 +214,7 @@ function postToSolr($data) {
             'body' => json_encode([$jsonDocument]) // Envía el documento como parte de un arreglo
         ]);
 
-        echo "Datos indexados en Solr. Respuesta: " . $response->getBody() . "\n";
+        //echo "Datos indexados en Solr. Respuesta: " . $response->getBody() . "\n";
     } catch (RequestException $e) {
         echo "Error al indexar en Solr: " . $e->getMessage() . "\n";
     }

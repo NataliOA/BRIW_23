@@ -98,7 +98,7 @@ if ($response) {
                     </a>&nbsp;
                 <?php endfor;?>
             </div>
-            <div class="resultados-container"> 
+ <div class="resultados-container">
                 <?php foreach ($resultados as $doc): ?>
                     <div class="resultado">
                         <h2>
@@ -107,15 +107,11 @@ if ($response) {
                             </a>
                         </h2>
                         <p class="snippet">
-                            <?php echo htmlspecialchars($doc['snippet']); ?>
-                        </p>
-                        <p class="descripcion">
-                        <p><strong>Descripción:</strong>
-                            <?php echo htmlspecialchars($doc['description']);?>
+                            <?php echo htmlspecialchars($doc['description']); ?>
                         </p>
                         <p class="categoria">
                         <p><strong>Categoria:</strong>
-                            <?php echo htmlspecialchars($doc['category']);?>
+                            <?php echo htmlspecialchars($doc['category']); ?>
                         </p>
                         <p class="relevancia">
                         <p><strong>Relevancia:</strong>

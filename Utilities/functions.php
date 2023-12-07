@@ -1,5 +1,5 @@
 <?php
-    include 'crawler.php';
+    include '..\Buscador\crawler.php';
     function verificarCrawler(){
         $info = file_get_contents("..\Utilities\URLS.txt");
 

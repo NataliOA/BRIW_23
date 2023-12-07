@@ -59,10 +59,31 @@ color: #1a1d1a;
 }   
 
 #lista-sugerencias {
-    list-style-type: none; /* Elimina los marcadores */
-    padding: 10; /* Elimina el relleno izquierdo, si es necesario */
+    display: none;
+        /* Inicialmente oculta */
+        position: absolute;
+        top: 100%;
+        /* Justo debajo del input de búsqueda */
+        left: 0;
+        right: 0;
+        background-color: white;
+        border: 1px solid #ccc;
+        border-top: none;
+        /* No hay borde en la parte superior para que parezca conectado con el input */
+        z-index: 1000;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+#lista-sugerencias li {
+    padding: 10px;
+        text-align: left;
+        cursor: pointer;
+        border-bottom: 1px solid #eee;
+}
+
+#lista-sugerencias li:hover {
+    background-color: #f8f8f8;
+}
 #campo-busqueda {
     width: 500px;
 }
