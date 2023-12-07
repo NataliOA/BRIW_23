@@ -1,7 +1,5 @@
 <?php
 require '../vendor/autoload.php';
-//$resp = var_dump(class_exists('Symfony\Component\DomCrawler\Crawler'));
-//echo $resp;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -69,17 +67,14 @@ function fetchUrl($client, $url) {
     }
 }
 
-// URL inicial
-//$startUrl = 'https://www.muyinteresante.es/';
-//startCrawler('https://www.bbc.com/mundo');
-// Profundidad 1
+
 function startCrawler($startUrl){
     global $client;
     global $visitedUrls;
     global $keywordsToCategory;
 
     $client = new Client();    
-
+    // Profundidad 1
     $html = fetchUrl($client, $startUrl);
     if ($html) {
         $depth1Links = getLinks($html, $startUrl, $visitedUrls, 5);
@@ -95,15 +90,8 @@ function startCrawler($startUrl){
                         $details = getPageDetails($detailsHtml, $linkDepth2, $keywordsToCategory);
                         // Solo imprimir si todos los detalles requeridos están presentes.
                         if ($details) {
-                            /*echo "Enlace de nivel 2 encontrado: $linkDepth2\n";
-                            echo "Título: " . $details['title'] . "\n";
-                            echo "Descripción: " . $details['description'] . "\n";
-                            echo "Categoría: " . $details['category'] . "\n";
-                            echo "Snippet: " . $details['snippet'] . "\n";*/
                             postToSolr($details);
-                        } /*else {
-                            echo "La página no tiene todos los detalles requeridos y no será impresa.\n";
-                        }*/
+                        }
                     }
                 }
             }
@@ -140,7 +128,6 @@ function getSafeText(Crawler $crawler, $selector) {
     try {
         $text = $crawler->filter($selector)->text();
     } catch (\InvalidArgumentException $e) {
-        // Maneja el caso en que el selector no existe, por ejemplo, puedes imprimir un mensaje o simplemente continuar.
         //echo "Selector '{$selector}' no encontrado.";
     }
     return $text;
@@ -163,7 +150,6 @@ function getSafeAttribute(Crawler $crawler, $selector, $attribute) {
             $expression = "translate(@name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = '$lowerAttribute'";
             $value = $crawler->filterXPath("//meta[$expression]")->attr('content');
         } catch (\InvalidArgumentException $e) {
-            // Manejar el caso en que el selector no existe
             //echo "Atributo '{$attribute}' no encontrado para el selector '{$selector}'.";
         }
     }
@@ -195,9 +181,8 @@ function assignCategory($title, $description, $keywordsToCategory) {
 
 function postToSolr($data) {
     $client = new GuzzleHttp\Client();
-    $solrUrl = 'http://localhost:8983/solr/Proyecto_BRIW1/update?commit=true'; // Asegúrate de reemplazar con tu URL de Solr y nombre de core
+    $solrUrl = 'http://localhost:8983/solr/Proyecto_BRIW1/update?commit=true'; 
 
-    // Asegúrate de que los datos se envíen como un documento JSON y no como una cadena JSON serializada.
     $jsonDocument = [
         'id' => $data['id'] ?? uniqid(), // Genera un ID único si no se proporciona uno
         'title' => $data['title'],
@@ -205,13 +190,12 @@ function postToSolr($data) {
         'category' => $data['category'],
         'snippet' => $data['snippet'],
         'url' => $data['url']
-        // No es necesario enviar "_version_", Solr lo manejará automáticamente
     ];
 
     try {
         $response = $client->post($solrUrl, [
             'headers' => ['Content-Type' => 'application/json'],
-            'body' => json_encode([$jsonDocument]) // Envía el documento como parte de un arreglo
+            'body' => json_encode([$jsonDocument]) 
         ]);
 
         echo "Datos indexados en Solr. Respuesta: " . $response->getBody() . "\n";

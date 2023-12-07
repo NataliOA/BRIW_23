@@ -7,6 +7,7 @@ include '../Utilities/functions.php';
 verificarCrawler();
 
 $palabras = explode(" ", $query);
+$palabras = removeStopWords($palabras);
 $sinonimos = [];
 $busqueda = [];
 $querySin = '';
